@@ -17,6 +17,13 @@ public class Const {
     public interface ProductListOrderBy{
         Set<String> PRICE_ASC_DESC = Sets.newHashSet("price_desc","price_asc");
     }
+public interface RedisCacheExtime{
+        int REDIS_SEESION_EXTIME=60*30;//设置redis的时间为30分钟
+
+
+}
+
+
 
     public interface Cart{
         int CHECKED = 1;//即购物车选中状态
