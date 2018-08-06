@@ -7,6 +7,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * 流程：
+ * 登陆的时候将COOKIE_NAME,和sessionId生成cookie进行种入
+ * 将sessionId和User的信息存入到redis当中
+ * 当均衡负载的时候，只需要登陆一次，调用其他接口的时候
+ * 从request当中拿到对应的COOKIE_NAME所对应的value值
+ * 然后去redis中拿出存入的User信息
+ */
 @Slf4j
 public class CookieUtil {
     /**
