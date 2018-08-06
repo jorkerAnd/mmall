@@ -10,6 +10,7 @@ import com.mmall.util.CookieUtil;
 import com.mmall.util.JsonUtil;
 import com.mmall.util.RedisPoolUtil;
 import com.sun.corba.se.spi.activation.Server;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 @RequestMapping("/user/")
+@Slf4j
 public class UserController {
 
 
@@ -73,6 +75,9 @@ public class UserController {
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);
         CookieUtil.delLoginToken(httpServletRequest, httpServletResponse);
         RedisPoolUtil.del(loginToken);
+        String result=CookieUtil.readLoginToken(httpServletRequest);
+
+        log.info(result);
         return ServerResponse.createBySuccess();
     }
 

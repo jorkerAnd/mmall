@@ -67,6 +67,8 @@ public class CookieUtil {
 //写入cookie
     public static void writeLoginToken(HttpServletResponse httpServletResponse, String value) {
         Cookie cookie = new Cookie(COOKIE_NAME, value);
+
+        cookie.setDomain(COOKIE_DOMAIN);
         cookie.setPath("/");//代表设置在根目录下
         //防止脚本和第三方获取cookie
         cookie.setHttpOnly(true);
@@ -87,12 +89,13 @@ public class CookieUtil {
             for (Cookie ck : cookies) {
 
                 if (StringUtils.equals(ck.getName(), COOKIE_NAME)) {
+
                     ck.setDomain(COOKIE_DOMAIN);
                     ck.setPath("/");
                     ck.setMaxAge(0);
                     log.info("del cookieName:{} cookieValue:{}", ck.getName(), ck.getValue());
                     httpServletResponse.addCookie(ck);
-                      return;//当命中的时候，直接结束方法的进行，进行返回
+                    return;//当命中的时候，直接结束方法的进行，进行返回
                 }
             }
         }
