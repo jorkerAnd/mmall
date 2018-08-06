@@ -21,7 +21,7 @@ public class CookieUtil {
      * cookie中的Domain的选项为，如果声明了一个domain的作用域
      * 比如下面的domain的作用域为.happy.com ，说明只有在其子域名才能拿到这个cookie
      */
-    private final static String COOKIE_DOMAIN = ".happy.com";
+    private final static String COOKIE_DOMAIN = "happy.com";
     private final static String COOKIE_NAME = "mmall_login_token";
 
 //读取cookie
