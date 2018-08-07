@@ -24,7 +24,7 @@ public class CookieUtil {
     private final static String COOKIE_DOMAIN = "happy.com";
     private final static String COOKIE_NAME = "mmall_login_token";
 
-//读取cookie
+    //读取cookie
     public static String readLoginToken(HttpServletRequest httpServletRequest) {
 
         Cookie[] cookies = httpServletRequest.getCookies();
@@ -45,7 +45,6 @@ public class CookieUtil {
     }
 
     /**
-     *
      * x:domain=".happy.com"
      * a:A.happy.com                        cookie: domain=A.happy.com :path="/"
      * b:B.happy.com                        cookie: domain=B.happy.com :path="/"
@@ -57,7 +56,6 @@ public class CookieUtil {
      * c能够拿到a的cookie
      * c，d不能相互拿到cookie
      * c,d能够拿到e的cookie
-     *
      *
      * @param httpServletResponse
      * @param value
@@ -82,14 +80,20 @@ public class CookieUtil {
 //删除对应的cookie
 
 
-
+    /**
+     * 遇到的大坑
+     *
+     * @param httpServletRequest
+     * @param httpServletResponse
+     */
+    //todo
     public static void delLoginToken(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         Cookie[] cookies = httpServletRequest.getCookies();
         if (cookies != null) {
             for (Cookie ck : cookies) {
 
                 if (StringUtils.equals(ck.getName(), COOKIE_NAME)) {
-
+                    log.info(ck.getDomain());
                     ck.setDomain(COOKIE_DOMAIN);
                     ck.setPath("/");
                     ck.setMaxAge(0);
