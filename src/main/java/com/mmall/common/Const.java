@@ -14,12 +14,12 @@ public class Const {
     public static final String EMAIL = "email";
     public static final String USERNAME = "username";
 
+    public static final String TOKEN_PREFIX = "token_";
     public interface ProductListOrderBy{
         Set<String> PRICE_ASC_DESC = Sets.newHashSet("price_desc","price_asc");
     }
 public interface RedisCacheExtime{
         int REDIS_SEESION_EXTIME=60*30;//设置redis的时间为30分钟
-
 
 }
 
