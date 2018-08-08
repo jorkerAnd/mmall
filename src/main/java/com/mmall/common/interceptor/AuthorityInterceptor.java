@@ -1,5 +1,6 @@
 package com.mmall.common.interceptor;
 
+import com.google.common.collect.Maps;
 import com.mmall.common.Const;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
@@ -11,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
@@ -35,6 +37,7 @@ public class AuthorityInterceptor implements HandlerInterceptor {
         //请求中HandlerMethod
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         String methodName = handlerMethod.getMethod().getName();
+        //simpleName是返回的类名，而getname是获得包括包路径的类名，可以解决不同包下类名重复的问题
         String className = handlerMethod.getBean().getClass().getSimpleName();
         StringBuffer requestParamBuffer = new StringBuffer();
         Map paramMap = request.getParameterMap();
@@ -55,26 +58,59 @@ public class AuthorityInterceptor implements HandlerInterceptor {
 
         User user = null;
         String loginToken = CookieUtil.readLoginToken(request);
+
+        /**
+         * 登陆请求可以通过配置里面不接收manage/user/login.do
+         * 也可以在interceptor当中进行判断
+         *如下
+         */
+//        if (StringUtils.equals(className, "UserMangageController") && StringUtils.equals("login", methodName))
+//            return true;
+        //对于富文本的上传，返回值必须为指定的类型，返回map类型
+
+
         if (StringUtils.isNotEmpty(loginToken)) {
             String userJsonStr = RedisShardedPoolUtil.get(loginToken);
             user = JsonUtil.string2Obj(userJsonStr, User.class);
         }
 
         if (user == null || (user.getRole().intValue() != Const.Role.ROLE_ADMIN)) {
+
+
             //返回false,既不会调用controller
             //这里要添加reset,否则报异常，
             //todo
+
             /**
              * 将response交给interceptor进行托管，应该设置一些配置
+             * 细化操作细节
              */
             response.reset();
             response.setCharacterEncoding("UTF-8");//设置编码，否则会乱码
             response.setContentType("application/json;charset=UTF-8");
             PrintWriter out = response.getWriter();
             if (user == null) {
-                out.print(JsonUtil.obj2String(ServerResponse.createByErrorMessage("拦截器拦截，用户未登陆")));
+                if (StringUtils.equals(className, "ProductManageController") && StringUtils.equals("richtextImgUpload", methodName)) {//返回一个map的序列化
+                    Map resultMap = Maps.newHashMap();
+                    resultMap.put("success", false);
+                    resultMap.put("msg", "请登录管理员");
+                    out.print(JsonUtil.obj2String(resultMap));
+
+                } else {
+
+
+                    out.print(JsonUtil.obj2String(ServerResponse.createByErrorMessage("拦截器拦截，用户未登陆")));
+                }
             } else {
-                out.print(JsonUtil.obj2String(ServerResponse.createByErrorMessage("拦截器拦截，用户不是管理员")));
+                if (StringUtils.equals(className, "ProductManageController") && StringUtils.equals("richtextImgUpload", methodName)) {//返回一个map的序列化
+                    Map resultMap = Maps.newHashMap();
+                    resultMap.put("success", false);
+                    resultMap.put("msg", "无权操作");
+                    out.print(JsonUtil.obj2String(resultMap));
+
+                } else {
+                    out.print(JsonUtil.obj2String(ServerResponse.createByErrorMessage("拦截器拦截，用户不是管理员")));
+                }
             }
             out.flush();
             out.close();
@@ -95,6 +131,7 @@ public class AuthorityInterceptor implements HandlerInterceptor {
      */
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         log.info("afterHandler");
-
     }
+
+
 }
