@@ -2,7 +2,6 @@ package com.mmall.dao.test;
 
 import com.mmall.dao.UserMapper;
 import com.mmall.pojo.User;
-import com.mmall.test.TestBase;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ import java.util.Date;
 /**
  * Created by geely on mmall.
  */
-public class DaoTest extends TestBase {
+public class DaoTest {
 
     @Autowired
     private UserMapper userMapper;

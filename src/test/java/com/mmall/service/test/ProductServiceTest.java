@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.mmall.common.ServerResponse;
 import com.mmall.service.IProductService;
-import com.mmall.test.TestBase;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,7 +12,7 @@ import java.util.List;
 /**
  * Created by geely
  */
-public class ProductServiceTest extends TestBase {
+public class ProductServiceTest {
 
     @Autowired
     private IProductService iProductService;

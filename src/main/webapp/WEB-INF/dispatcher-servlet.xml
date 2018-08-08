@@ -9,14 +9,16 @@
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd
    http://www.springframework.org/schema/aop
    http://www.springframework.org/schema/aop/spring-aop.xsd "
-     >
+>
+    <!-- 关闭默认的扫描-->
+    <context:component-scan base-package="com.mmall" annotation-config="true" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
 
-    <context:component-scan base-package="com.mmall.controller" annotation-config="true"/>
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>   <!--<context:annotation-config/>-->
 
 
-    <context:component-scan base-package="com.mmall.aspect"/>
-    <!--<context:annotation-config/>-->
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
@@ -37,6 +39,21 @@
         <property name="maxInMemorySize" value="4096"/>
         <property name="defaultEncoding" value="UTF-8"></property>
     </bean>
+
+    <!-- mvc中拦截器的初始化-->
+    <mvc:interceptors>
+        <!--对于bean的声明，会拦截所有的请求-->
+        <!--<bean></bean>-->
+        <mvc:interceptor>
+            <!--   manage/a.do   manage/*
+               manage/b.do   manage/*
+               manage/product/save.do  manage/**
+               manage/order/detail.do   manage/**-->
+            <mvc:mapping path="/manage/**"/>
+            <mvc:exclude-mapping path="/manage/user/login.do"/>
+            <bean class="com.mmall.common.interceptor.AuthorityInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 
 </beans>

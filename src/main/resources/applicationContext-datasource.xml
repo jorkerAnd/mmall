@@ -84,12 +84,12 @@
       <tx:annoation-driven/>只会查找和它在相同的应用上下文件中定义的bean上面的@Transactional注解
       即这个配置文件的上下文扫描的为service，所以只会在@Service注解生成的bean下生效-->
     <!-- 使用@Transactional进行声明式事务管理需要声明下面这行 -->
-    <tx:annotation-driven transaction-manager="transactionManager" />
-    <!-- 事务管理 -->
+    <!--<tx:annotation-driven transaction-manager="transactionManager" />
+    &lt;!&ndash; 事务管理 &ndash;&gt;
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
         <property name="rollbackOnCommitFailure" value="true"/>
-    </bean>
+    </bean>-->
 
 
 </beans>

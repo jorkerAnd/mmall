@@ -9,29 +9,29 @@
      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-
+    <!--初始化一切sping-session准备-->
     <bean id="redisHttpSessionConfiguration"
           class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
         <property name="maxInactiveIntervalInSeconds" value="1800"/>
     </bean>
 
-    <!--根据实际的需要来注入属性，-->
+    <!-- -->
+  <!--  &lt;!&ndash;根据实际的需要来注入属性，&ndash;&gt;
     <bean id="defaultCookieSerializer" class="org.springframework.session.web.http.DefaultCookieSerializer">
         <property name="cookieName" value="SESSION_NAME"/>
         <property name="useHttpOnlyCookie" value="true"/>
-        <property name="cookiePath" value="/" />
+        <property name="cookiePath" value="/"/>
         <property name="cookieMaxAge" value="31536000"/>
 
-    </bean>
+    </bean>-->
 
 
-
-
+    <!--连接池的属性配置-->
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxTotal" value="20"/>
     </bean>
 
-
+    <!--存储容器的连接池-->
     <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
         <property name="hostName" value="192.168.132.129"/>
         <property name="port" value="6379"/>

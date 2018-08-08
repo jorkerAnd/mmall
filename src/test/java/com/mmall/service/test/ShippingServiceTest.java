@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.Shipping;
 import com.mmall.service.impl.ShippingServiceImpl;
-import com.mmall.test.TestBase;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -16,7 +15,7 @@ import java.util.List;
 /**
  * Created by geely
  */
-public class ShippingServiceTest extends TestBase {
+public class ShippingServiceTest {
 
     private Logger logger = LoggerFactory.getLogger(ShippingServiceTest.class);
 
