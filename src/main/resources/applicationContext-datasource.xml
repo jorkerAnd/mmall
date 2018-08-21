@@ -9,9 +9,10 @@
      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <!-- 这个配置和下面的配置是一样的，也可以放在spring上下文当中-->
+    <context:property-placeholder location="classpath:datasource.properties"/>
 
-
-    <bean id="propertyConfigurer"
+    <!--<bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="order" value="2"/>
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
@@ -22,8 +23,7 @@
         </property>
         <property name="fileEncoding" value="utf-8"/>
     </bean>
-
-
+-->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${db.driverClassName}"/>
         <property name="url" value="${db.url}"/>

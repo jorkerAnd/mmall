@@ -31,7 +31,7 @@ public class SessionExpireFilter implements Filter {
             String userJsonStr= RedisShardedPoolUtil.get(loginToken);
             User user= JsonUtil.string2Obj(userJsonStr,User.class);
              if(user!=null)
-                 RedisShardedPoolUtil.setEx(loginToken, Const.RedisCacheExtime.REDIS_SEESION_EXTIME);
+                 RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SEESION_EXTIME);
         }
         filterChain.doFilter(servletRequest,servletResponse);
     }

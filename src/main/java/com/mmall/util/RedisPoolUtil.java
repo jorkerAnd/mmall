@@ -86,7 +86,7 @@ public class RedisPoolUtil {
      * @param exTime
      * @return
      */
-    public static Long setEx(String key, int exTime) {
+    public static Long expire(String key, int exTime) {
         Jedis jedis = null;
         Long result = null;
         try {

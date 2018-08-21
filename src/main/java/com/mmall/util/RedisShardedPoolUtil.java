@@ -87,7 +87,7 @@ public class RedisShardedPoolUtil {
      * @param exTime
      * @return
      */
-    public static Long setEx(String key, int exTime) {
+    public static Long expire(String key, int exTime) {
         ShardedJedis jedis = null;
         Long result = null;
         try {
@@ -132,11 +132,37 @@ public class RedisShardedPoolUtil {
         String result = RedisShardedPoolUtil.set("sh", "sh");
         String value = RedisShardedPoolUtil.get("j");
         System.out.print(result + "   " + value);
-      //  Long long1 = RedisSharedPoolUtil.setEx("sh", 20 * 60);
-       //String long2 = RedisSharedPoolUtil.setEx("mybest", "yorbest", 20 * 60);
-       Long long3 = RedisShardedPoolUtil.del("sh");
+        //  Long long1 = RedisSharedPoolUtil.setEx("sh", 20 * 60);
+        //String long2 = RedisSharedPoolUtil.setEx("mybest", "yorbest", 20 * 60);
+        Long long3 = RedisShardedPoolUtil.del("sh");
 
 
     }
+
+
+
+    public static Long setNx(String key, String keyValue) {
+        ShardedJedis jedis = null;
+        Long result = null;
+        try {
+            jedis = RedisSharedPool.getJedis();
+            result = jedis.setnx(key, key);//返回值为1则成功 0则代表失败
+        } catch (Exception e) {
+            /**
+             *
+             */
+            log.error("setEx key:{}", key, e);
+            RedisSharedPool.returnBrokenResource(jedis);
+            return result;
+        }
+        RedisSharedPool.returnResource(jedis);
+        return result;
+    }
+
+
+
+
+
+
 
 }

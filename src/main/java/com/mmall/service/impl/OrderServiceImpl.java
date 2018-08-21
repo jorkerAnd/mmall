@@ -41,6 +41,7 @@ import com.mmall.vo.ShippingVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -461,17 +462,17 @@ public class OrderServiceImpl implements IOrderService {
                 //File直接指定路径，或者第一个参数为目录，第二个参数为指定的文件名
                 File targetFile = new File(path, qrFileName);
 
-                Boolean result1=false;
+                Boolean result1 = false;
 
                 try {
-                   result1= FTPUtil.uploadFile(Lists.newArrayList(targetFile));
+                    result1 = FTPUtil.uploadFile(Lists.newArrayList(targetFile));
                 } catch (IOException e) {
                     e.printStackTrace();
                     log.error("上传二维码异常", e);
 
-                   throw new RuntimeException();
+                    throw new RuntimeException();
                 }
-                if(result1==false)
+                if (result1 == false)
                     throw new RuntimeException();
 
                 log.info("qrPath:" + qrPath);
@@ -504,7 +505,7 @@ public class OrderServiceImpl implements IOrderService {
         }
     }
 
-     @Transactional
+    @Transactional
     public ServerResponse aliCallback(Map<String, String> params) {
         log.info("==============开始创建订单=====================");
         Long orderNo = Long.parseLong(params.get("out_trade_no"));
@@ -514,9 +515,9 @@ public class OrderServiceImpl implements IOrderService {
         if (order == null)
             return ServerResponse.createByErrorMessage("不是快乐商城的订单");
 
-         if (order.getStatus()>=Const.OrderStatusEnum.PAID.getCode())
-             //需要设置一个条件来停止支付宝的重复调用
-             return ServerResponse.createBySuccess("支付宝重复调用");
+        if (order.getStatus() >= Const.OrderStatusEnum.PAID.getCode())
+            //需要设置一个条件来停止支付宝的重复调用
+            return ServerResponse.createBySuccess("支付宝重复调用");
 
 
         if (Const.AlipayCallback.TRADE_STATUS_TRADE_SUCCESS.equals(tradeStatus)) {
@@ -602,6 +603,35 @@ public class OrderServiceImpl implements IOrderService {
             }
         }
         return ServerResponse.createByErrorMessage("订单不存在");
+    }
+
+    @Override
+    public void closeOrder(int hour) {
+        //减去一个时间，跟下订单的时候进行比较，如果时间还小于我们相减的时间，那么说明订单超时了
+        Date closeDateTime = DateUtils.addHours(new Date(), -hour);
+        List<Order> orderList = orderMapper.selectOrderStatusByCreateTime(Const.OrderStatusEnum.NO_PAY.getCode(), DateTimeUtil.dateToStr(closeDateTime));
+        for (Order order : orderList) {
+            List<OrderItem> orderItemList = orderItemMapper.getByOrderNo(order.getOrderNo());
+
+            for (OrderItem orderItem : orderItemList) {
+                Integer stock = productMapper.selectStockByProductId(orderItem.getProductId());
+                if (stock == null)
+                           /*考虑订单里面的商品被删除的情况
+                            一般的商品是不会进行删除的，只是将其移除线上的数据库，移到另外一个库里面
+                           */
+                    continue;
+//尽量使更新的字段少一些，提高运行时间，所以直接new一个对象，而不是直接将product直接取出来
+                Product product = new Product();
+                product.setId(orderItem.getProductId());
+                product.setStock(stock + orderItem.getQuantity());
+                productMapper.updateByPrimaryKeySelective(product);
+            }
+
+            orderMapper.closeOrderByOrderId(order.getId());
+            log.info("关闭订单成功：{}", order.getOrderNo());
+        }
+
+
     }
 
 
