@@ -34,7 +34,7 @@ public class CloseOrderTask {
         log.info("关闭订单定时任务结束");
     }
 
-
+    @Scheduled(cron = "0 */1 * * * ?")
     public void closeOrderTaskV12() {
         log.info("关闭订单定时任务启动");
         Long lockTime=Long.parseLong(PropertiesUtil.getProperty("lock.time"));
@@ -47,8 +47,6 @@ public class CloseOrderTask {
 
             log.info("没有获得分布式锁：{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
         }
-
-
         log.info("关闭订单定时任务结束");
     }
 
@@ -61,7 +59,6 @@ public class CloseOrderTask {
         iOrderService.closeOrder(hour);//执行完毕业务逻辑之后要进行锁的删除
         log.info("释放{}，ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
         log.info("======================");
-
     }
 
 
