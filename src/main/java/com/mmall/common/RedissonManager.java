@@ -25,9 +25,9 @@ public class RedissonManager {
     private void init() {
         //setAdress中传入的参数为host:port的格式
         try {
-            config.useSingleServer().setAddress(new StringBuilder().append(redis1Ip).append(":").append(redis1Port).toString());
-            redisson=(Redisson) Redisson.create(config);
-        log.info("Redisson成功启动");
+            config.useSingleServer().setAddress(new StringBuilder().append("redis://").append(redis1Ip).append(":").append(redis1Port).toString());
+            redisson = (Redisson) Redisson.create(config);
+            log.info("Redisson成功启动");
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -36,9 +36,8 @@ public class RedissonManager {
     }
 
 
-
-public Redisson getRedisson(){
+    public Redisson getRedisson() {
         return redisson;
-}
+    }
 
 }

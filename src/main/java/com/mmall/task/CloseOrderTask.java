@@ -83,7 +83,7 @@ public class CloseOrderTask {
 //        log.info("关闭订单定时任务结束");
 //    }
 
-    @Scheduled(cron = "0 */1 * * * ?")
+   // @Scheduled(cron = "0 */1 * * * ?")
     public void closeOrderTaskV12() {
         log.info("关闭订单定时任务启动");
         Long lockTime = Long.parseLong(PropertiesUtil.getProperty("lock.time"));
@@ -113,7 +113,7 @@ public class CloseOrderTask {
     /**
      * 利用时间戳进行死锁时间的判断
      */
-    @Scheduled(cron = "0 */1 * * * ?")
+   // @Scheduled(cron = "0 */1 * * * ?")
     public void closeOrderTaskV3() {
         log.info("关闭订单定时任务启动");
         Long lockTime = Long.parseLong(PropertiesUtil.getProperty("lock.time"));
@@ -151,8 +151,11 @@ public class CloseOrderTask {
         //第一个参数是最多等待多长时间，第二个参数表示多久会释放锁
          boolean getLock=false;
         try {
-
-            if(getLock = lock.tryLock(2, 5, TimeUnit.SECONDS)){
+            /**
+             * 进行锁的竞争，只由一个
+             */
+//wait_time的时间可能设置的时间为大于获得锁进程的处理时间从而再次获得锁，所以如果规定同一个时间只由一个进程进行处理，那么设置等待时间为0
+            if(getLock = lock.tryLock(0, 5, TimeUnit.SECONDS)){
                 log.info("Redisson获取到分布式锁：{}，ThreadName:{}",Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
                 int hour = Integer.parseInt(PropertiesUtil.getProperty("close.order.task.time.hour"));
                 iOrderService.closeOrder(hour);
@@ -163,14 +166,15 @@ public class CloseOrderTask {
         } catch (InterruptedException e) {
             log.warn("获取分布式锁异常");
         }finally {
+            //如果获取不到锁，那么进行返回
             if(!getLock)
             return;
             lock.unlock();
             log.info("Redisson分布式锁进行释放");
         }
-
-
     }
+
+
 
 
 }

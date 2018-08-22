@@ -51,7 +51,7 @@ public class UserSpringController {
         if (response.isSuccess()) {
             session.setAttribute(Const.CURRENT_USER, response.getData());
 
-/**
+ /**
  * EB60894CC11E1574B1118A975BF17053
  * JSESSIONID=EB60894CC11E1574B1118A975BF17053
  * 一个浏览器访问一次就会出现了一次独有的session
