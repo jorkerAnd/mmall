@@ -36,6 +36,33 @@ public class RedisShardedPoolUtil {
         return result;
     }
 
+    /**
+     * redis中的getset是具有原子性的，set的同时返回get的值
+     * @param key
+     * @param value
+     * @return
+     */
+    public static String getset(String key, String value) {
+        ShardedJedis jedis = null;
+        String result = null;
+        try {
+            jedis = RedisSharedPool.getJedis();
+            result = jedis.getSet(key, value);
+        } catch (Exception e) {
+            /**
+             *
+             */
+            log.error("set key:{} value:{}", key, value, e);
+            RedisSharedPool.returnBrokenResource(jedis);
+            return result;
+        }
+        RedisSharedPool.returnResource(jedis);
+        return result;
+    }
+
+
+
+
     public static String get(String key) {
         ShardedJedis jedis = null;
         String result = null;
