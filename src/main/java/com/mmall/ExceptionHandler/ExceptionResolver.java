@@ -18,11 +18,11 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
         log.error("{} Exception", httpServletRequest.getRequestURI(), e);
-         ModelAndView modelAndView=new ModelAndView(new MappingJackson2JsonView());
+        ModelAndView modelAndView = new ModelAndView(new MappingJackson2JsonView());
 
-         modelAndView.addObject("status", ResponseCode.ERROR.getCode());
-         modelAndView.addObject("msg","接口异常，详情请查看服务器");
-         modelAndView.addObject("data",e.toString());
+        modelAndView.addObject("status", ResponseCode.ERROR.getCode());
+        modelAndView.addObject("msg", "接口异常，详情请查看服务器");
+        modelAndView.addObject("data", e.toString());
         return modelAndView;
     }
 }

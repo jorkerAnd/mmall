@@ -18,7 +18,7 @@
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>   <!--<context:annotation-config/>-->
 
-<!--默认加入两个bean 来实现数据的绑定-->
+    <!--默认加入两个bean 来实现数据的绑定-->
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">

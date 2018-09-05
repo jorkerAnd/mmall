@@ -27,7 +27,7 @@ public class AuthorityInterceptor implements HandlerInterceptor {
      * @param request
      * @param response
      * @param handler  controller标注的类就是一个handler ,而他的方法就是一个HandlerMethod的类型对象，可以拿到方法名，参数，或者返回类型
-     * @return 如果return为false的话，那么不会进行controller方法，不再进行
+     * @return         如果return为false的话，那么不会进行controller方法，不再进行
      * @throws Exception
      */
     @Override
@@ -56,13 +56,13 @@ public class AuthorityInterceptor implements HandlerInterceptor {
             requestParamBuffer.append(mapkey).append("=").append(mapValue);
         }
 
-        User user = null;
-        String loginToken = CookieUtil.readLoginToken(request);
+         User user = null;
+         String loginToken = CookieUtil.readLoginToken(request);
 
-        /**
+        /**两种方式
          * 登陆请求可以通过配置里面不接收manage/user/login.do
-         * 也可以在interceptor当中进行判断
-         *如下
+         * 也可以在interceptor当中进行判断，通过类名和方法名来排除登陆页面
+         * 如下
          */
 //        if (StringUtils.equals(className, "UserMangageController") && StringUtils.equals("login", methodName))
 //            return true;
@@ -70,9 +70,9 @@ public class AuthorityInterceptor implements HandlerInterceptor {
 
 
         if (StringUtils.isNotEmpty(loginToken)) {
-            String userJsonStr = RedisShardedPoolUtil.get(loginToken);
-            user = JsonUtil.string2Obj(userJsonStr, User.class);
-        }
+             String userJsonStr = RedisShardedPoolUtil.get(loginToken);
+             user = JsonUtil.string2Obj(userJsonStr, User.class);
+               }
 
         if (user == null || (user.getRole().intValue() != Const.Role.ROLE_ADMIN)) {
 

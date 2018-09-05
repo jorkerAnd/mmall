@@ -20,14 +20,15 @@ public class CategoryDaoTest {
 
     @Ignore
     @Test
-    public void getCategoryChild(){
-        Category d  = categoryMapper.selectByPrimaryKey(1);
+    public void getCategoryChild() {
+        Category d = categoryMapper.selectByPrimaryKey(1);
         System.out.println(d);
-        Category d4  = categoryMapper.selectByPrimaryKey(4);
+        Category d4 = categoryMapper.selectByPrimaryKey(4);
         System.out.println(d4);
     }
+
     @Test
-    public void testChildService(){
+    public void testChildService() {
         iCategoryService.selectCategoryAndChildrenById(2);
     }
 

@@ -24,17 +24,17 @@ public class ShippingServiceTest {
     private ShippingServiceImpl iShippingService;
 
     @Test
-    public void testSelect(){
+    public void testSelect() {
         ServerResponse sr = iShippingService.select(1, 3);
-        Shipping shipping = (Shipping)sr.getData();
+        Shipping shipping = (Shipping) sr.getData();
         logger.info(ToStringBuilder.reflectionToString(shipping));
 
     }
 
     @Test
-    public void testList(){
-        ServerResponse sr = iShippingService.list(1,1,2);
-        PageInfo<Shipping> p=new PageInfo<Shipping>((List<Shipping>)sr.getData());
+    public void testList() {
+        ServerResponse sr = iShippingService.list(1, 1, 2);
+        PageInfo<Shipping> p = new PageInfo<Shipping>((List<Shipping>) sr.getData());
         logger.info(ToStringBuilder.reflectionToString(sr.getData()));
         logger.info("======");
 

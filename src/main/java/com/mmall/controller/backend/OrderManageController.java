@@ -37,10 +37,10 @@ public class OrderManageController {
 
     @RequestMapping("list.do")
     @ResponseBody
-    public ServerResponse<PageInfo> orderList(HttpServletRequest httpServletRequest, @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
-                                              @RequestParam(value = "pageSize",defaultValue = "10")int pageSize){
+    public ServerResponse<PageInfo> orderList(HttpServletRequest httpServletRequest, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                              @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
-       // User user = (User)session.getAttribute(Const.CURRENT_USER);
+        // User user = (User)session.getAttribute(Const.CURRENT_USER);
 //        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
 //        if (StringUtils.isEmpty(loginToken))
 //            return ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户的信息");
@@ -62,12 +62,12 @@ public class OrderManageController {
 //
 //            return ServerResponse.createByErrorMessage("无权限操作");
 //        }
-        return iOrderService.manageList(pageNum,pageSize);
+        return iOrderService.manageList(pageNum, pageSize);
     }
 
     @RequestMapping("detail.do")
     @ResponseBody
-    public ServerResponse<OrderVo> orderDetail(HttpServletRequest httpServletRequest, Long orderNo){
+    public ServerResponse<OrderVo> orderDetail(HttpServletRequest httpServletRequest, Long orderNo) {
 
         //User user = (User)session.getAttribute(Const.CURRENT_USER);
 //        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
@@ -93,11 +93,10 @@ public class OrderManageController {
     }
 
 
-
     @RequestMapping("search.do")
     @ResponseBody
-    public ServerResponse<PageInfo> orderSearch(HttpServletRequest httpServletRequest, Long orderNo,@RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
-                                               @RequestParam(value = "pageSize",defaultValue = "10")int pageSize){
+    public ServerResponse<PageInfo> orderSearch(HttpServletRequest httpServletRequest, Long orderNo, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                                @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
         // User user = (User)session.getAttribute(Const.CURRENT_USER);
 //        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
@@ -118,15 +117,14 @@ public class OrderManageController {
 //        }else{
 //            return ServerResponse.createByErrorMessage("无权限操作");
 //        }
-        return iOrderService.manageSearch(orderNo,pageNum,pageSize);
+        return iOrderService.manageSearch(orderNo, pageNum, pageSize);
 
     }
 
 
-
     @RequestMapping("send_goods.do")
     @ResponseBody
-    public ServerResponse<String> orderSendGoods( HttpServletRequest httpServletRequest, Long orderNo){
+    public ServerResponse<String> orderSendGoods(HttpServletRequest httpServletRequest, Long orderNo) {
 
 
         // User user = (User)session.getAttribute(Const.CURRENT_USER);
@@ -150,12 +148,6 @@ public class OrderManageController {
         return iOrderService.manageSendGoods(orderNo);
 
     }
-
-
-
-
-
-
 
 
 }

@@ -38,6 +38,7 @@ public class RedisShardedPoolUtil {
 
     /**
      * redis中的getset是具有原子性的，set的同时返回get的值
+     *
      * @param key
      * @param value
      * @return
@@ -59,8 +60,6 @@ public class RedisShardedPoolUtil {
         RedisSharedPool.returnResource(jedis);
         return result;
     }
-
-
 
 
     public static String get(String key) {
@@ -167,7 +166,6 @@ public class RedisShardedPoolUtil {
     }
 
 
-
     public static Long setNx(String key, String keyValue) {
         ShardedJedis jedis = null;
         Long result = null;
@@ -185,11 +183,6 @@ public class RedisShardedPoolUtil {
         RedisSharedPool.returnResource(jedis);
         return result;
     }
-
-
-
-
-
 
 
 }

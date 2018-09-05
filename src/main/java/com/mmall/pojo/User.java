@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,7 +32,6 @@ public class User implements Serializable {
     private Date createTime;
 
     private Date updateTime;
-
 
 
 }

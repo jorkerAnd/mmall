@@ -40,7 +40,7 @@ public class RedisPool {
         jedisPoolConfig.setTestOnReturn(testOnReturn);
         //连接耗尽的时候，是否阻塞，false会抛出异常，true.阻塞到超时
         jedisPoolConfig.setBlockWhenExhausted(true);
-        pool = new JedisPool(jedisPoolConfig, redisIp, redisPort, 1000*2,"2100081");
+        pool = new JedisPool(jedisPoolConfig, redisIp, redisPort, 1000 * 2, "2100081");
 
     }
 
@@ -50,6 +50,7 @@ public class RedisPool {
 
     /**
      * 因为为了将不可用的redis实例放回pool当中，所有需要将testOnReturn设置为false。否则不会将错误的redis实例放回，提高效率
+     *
      * @param jedis
      */
     public static void returnBrokenResource(Jedis jedis) {
@@ -64,8 +65,8 @@ public class RedisPool {
     }
 
     public static void main(String[] args) {
-        Jedis jedis=pool.getResource();
-        jedis.set("jorker","handsome");
+        Jedis jedis = pool.getResource();
+        jedis.set("jorker", "handsome");
         returnResource(jedis);
         pool.destroy();
         System.out.print("success");

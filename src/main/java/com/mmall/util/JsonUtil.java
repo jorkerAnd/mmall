@@ -66,9 +66,6 @@ public class JsonUtil {
         objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
 
-
-
-
     }
 
     /**
@@ -129,7 +126,6 @@ public class JsonUtil {
     }
 
     /**
-     *
      * @param str
      * @param collections
      * @param elementClassess 可以传入多个为此？类型的数组
@@ -148,24 +144,23 @@ public class JsonUtil {
 
     /**
      * google中的Gson默认不打印null值
-     *  Gson gon = new GsonBuilder().serializeNulls().create();
+     * Gson gon = new GsonBuilder().serializeNulls().create();
+     *
      * @param args
      */
     public static void main(String[] args) {
 
-            testPojo testPojo=new testPojo();
+        testPojo testPojo = new testPojo();
 
-            testPojo.setJorker("");
-            testPojo.setSh("jorker");
-            Gson gson=new Gson();
-            String test=gson.toJson(testPojo);
-             log.info(test);
+        testPojo.setJorker("");
+        testPojo.setSh("jorker");
+        Gson gson = new Gson();
+        String test = gson.toJson(testPojo);
+        log.info(test);
 
-        com.mmall.pojo.testPojo1 testPojo1=gson.fromJson(test, com.mmall.pojo.testPojo1.class);
+        com.mmall.pojo.testPojo1 testPojo1 = gson.fromJson(test, com.mmall.pojo.testPojo1.class);
 
         System.out.println("end");
-
-
 
 
 //        User user = new User();

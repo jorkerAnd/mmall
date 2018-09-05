@@ -131,9 +131,9 @@ public class RedisPoolUtil {
         String result = RedisPoolUtil.set("sh", "sh");
         String value = RedisPoolUtil.get("j");
         System.out.print(result + "   " + value);
-      //  Long long1 = RedisPoolUtil.setEx("sh", 20 * 60);
-       //String long2 = RedisPoolUtil.setEx("mybest", "yorbest", 20 * 60);
-       Long long3 = RedisPoolUtil.del("sh");
+        //  Long long1 = RedisPoolUtil.setEx("sh", 20 * 60);
+        //String long2 = RedisPoolUtil.setEx("mybest", "yorbest", 20 * 60);
+        Long long3 = RedisPoolUtil.del("sh");
 
 
     }

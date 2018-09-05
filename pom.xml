@@ -114,8 +114,6 @@
         </dependency>
 
 
-
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
@@ -279,11 +277,11 @@
             <version>1.3</version>
         </dependency>
         <!--spring session导入的包-->
-      <!--  <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-data-redis</artifactId>
-            <version>1.2.0.RELEASE</version>
-        </dependency>-->
+        <!--  <dependency>
+              <groupId>org.springframework.session</groupId>
+              <artifactId>spring-session-data-redis</artifactId>
+              <version>1.2.0.RELEASE</version>
+          </dependency>-->
 
         <!--redis -->
         <dependency>

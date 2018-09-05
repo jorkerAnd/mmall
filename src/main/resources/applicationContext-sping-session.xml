@@ -16,14 +16,14 @@
     </bean>
 
     <!-- -->
-  <!--  &lt;!&ndash;根据实际的需要来注入属性，&ndash;&gt;
-    <bean id="defaultCookieSerializer" class="org.springframework.session.web.http.DefaultCookieSerializer">
-        <property name="cookieName" value="SESSION_NAME"/>
-        <property name="useHttpOnlyCookie" value="true"/>
-        <property name="cookiePath" value="/"/>
-        <property name="cookieMaxAge" value="31536000"/>
+    <!--  &lt;!&ndash;根据实际的需要来注入属性，&ndash;&gt;
+      <bean id="defaultCookieSerializer" class="org.springframework.session.web.http.DefaultCookieSerializer">
+          <property name="cookieName" value="SESSION_NAME"/>
+          <property name="useHttpOnlyCookie" value="true"/>
+          <property name="cookiePath" value="/"/>
+          <property name="cookieMaxAge" value="31536000"/>
 
-    </bean>-->
+      </bean>-->
 
 
     <!--连接池的属性配置-->

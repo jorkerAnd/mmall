@@ -6,14 +6,12 @@ package com.mmall.Exception;
  */
 public class checkException extends RuntimeException {
     private Integer code;
-    public checkException(Integer code ,String msg){
+
+    public checkException(Integer code, String msg) {
         //调用父类的构造函数的话只能在开头进行调用
         super(msg);
-        this.code=code;
+        this.code = code;
     }
-
-
-
 
 
 }

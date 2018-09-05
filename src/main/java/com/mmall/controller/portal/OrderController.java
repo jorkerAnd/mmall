@@ -66,7 +66,7 @@ public class OrderController {
     @RequestMapping("cancel.do")
     @ResponseBody
     public ServerResponse cancel(HttpServletRequest httpServletRequest, Long orderNo) {
-       // User user = (User) session.getAttribute(Const.CURRENT_USER);
+        // User user = (User) session.getAttribute(Const.CURRENT_USER);
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);
         if (StringUtils.isEmpty(loginToken))
             return ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户的信息");
@@ -102,7 +102,7 @@ public class OrderController {
     @RequestMapping("detail.do")
     @ResponseBody
     public ServerResponse detail(HttpServletRequest httpServletRequest, Long orderNo) {
-       // User user = (User) session.getAttribute(Const.CURRENT_USER);
+        // User user = (User) session.getAttribute(Const.CURRENT_USER);
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);
         if (StringUtils.isEmpty(loginToken))
             return ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户的信息");
@@ -137,7 +137,7 @@ public class OrderController {
     @RequestMapping("pay.do")
     @ResponseBody
     public ServerResponse pay(HttpServletRequest httpServletRequest, Long orderNo, HttpServletRequest request) {
-       // User user = (User) session.getAttribute(Const.CURRENT_USER);
+        // User user = (User) session.getAttribute(Const.CURRENT_USER);
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);
         if (StringUtils.isEmpty(loginToken))
             return ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户的信息");
@@ -190,7 +190,7 @@ public class OrderController {
             //进行支付宝的验签
             boolean alipayRSACheckedV2 = AlipaySignature.rsaCheckV2(params, Configs.getAlipayPublicKey(), "utf-8", Configs.getSignType());
             if (!alipayRSACheckedV2) {
-                 log.info("不是支付宝的请求");
+                log.info("不是支付宝的请求");
                 return ServerResponse.createByErrorMessage("非法请求");
             }
 
@@ -202,29 +202,29 @@ public class OrderController {
  * 如果收到了success就会停止回调
  */
         //todo 验证是否为我这个商城订单或者订单状态是否正确
-         ServerResponse serverResponse = iOrderService.aliCallback(params);
-         if (serverResponse.isSuccess())
+        ServerResponse serverResponse = iOrderService.aliCallback(params);
+        if (serverResponse.isSuccess())
 
             return Const.AlipayCallback.RESPONSE_SUCCESS;
 
-            return Const.AlipayCallback.RESPONSE_FAILED;
+        return Const.AlipayCallback.RESPONSE_FAILED;
 
 
     }
 
-     @Transactional
+    @Transactional
     @RequestMapping("query_order_pay_status.do")
     @ResponseBody
-    public ServerResponse<Boolean> queryOrderPayStatus( HttpServletRequest httpServletRequest, Long orderNo) {
+    public ServerResponse<Boolean> queryOrderPayStatus(HttpServletRequest httpServletRequest, Long orderNo) {
         //User user = (User) session.getAttribute(Const.CURRENT_USER);
-         String loginToken = CookieUtil.readLoginToken(httpServletRequest);
-         if (StringUtils.isEmpty(loginToken))
-             return ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户的信息");
+        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
+        if (StringUtils.isEmpty(loginToken))
+            return ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户的信息");
 
-         String userJsonStr = RedisShardedPoolUtil.get(loginToken);
+        String userJsonStr = RedisShardedPoolUtil.get(loginToken);
 
-         User user = JsonUtil.string2Obj(userJsonStr, User.class);
-         if (user == null) {
+        User user = JsonUtil.string2Obj(userJsonStr, User.class);
+        if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
 

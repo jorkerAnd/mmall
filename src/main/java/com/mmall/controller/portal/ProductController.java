@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.mmall.common.ServerResponse;
 import com.mmall.service.IProductService;
 import com.mmall.vo.ProductDetailVo;
+import org.apache.commons.lang.StringUtils;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -119,7 +120,7 @@ public class ProductController {
      * @return
      */
     //   /product/category/1/1/10/price_asc
-    @RequestMapping("/category/{categoryId}/{pageNum}/{pageSize}/{orderBy}")
+    @RequestMapping("/category/{cadtegoryI}/{pageNum}/{pageSize}/{orderBy}")
     @ResponseBody
     public ServerResponse<PageInfo> listRestful(
             @PathVariable(value = "categoryId") Integer categoryId,
@@ -129,6 +130,15 @@ public class ProductController {
         return iProductService.getProductByKeywordCategory("", categoryId, pageNum, pageSize, orderBy);
     }
 
+    /**
+     * 对于restful风格的url，是用占位符来进行占位的，如果pageNum为NULL,那么可以肯定后面的参数一定都为零
+     *
+     * @param keyword
+     * @param pageNum
+     * @param pageSize
+     * @param orderBy
+     * @return
+     */
     //   /product/keyword/手机/1/10/price_asc
     @RequestMapping("/keyword/{keyword}/{pageNum}/{pageSize}/{orderBy}")
     @ResponseBody
@@ -139,5 +149,6 @@ public class ProductController {
             @PathVariable(value = "orderBy") String orderBy) {
         return iProductService.getProductByKeywordCategory("", null, pageNum, pageSize, orderBy);
     }
+
 
 }

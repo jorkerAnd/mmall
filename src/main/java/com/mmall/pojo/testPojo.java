@@ -8,5 +8,4 @@ public class testPojo {
     private String sh;
 
 
-
 }

@@ -15,7 +15,7 @@
 
     <!--spring schedule的sping配置-->
     <task:annotation-driven/>
-<!--加载一个properties的配置文件，并且可以应用在spring容器中的上下文信息-->
+    <!--加载一个properties的配置文件，并且可以应用在spring容器中的上下文信息-->
     <context:property-placeholder location="classpath:datasource.properties"/>
     <import resource="applicationContext-datasource.xml"/>
 

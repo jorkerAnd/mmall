@@ -33,8 +33,9 @@ public interface OrderMapper {
     //二期新增定时关单
 
     /**
-     *Ps:很重要
+     * Ps:很重要
      * xml文件中中的<  >是非法的，需要将其进行转移，用CDATA进行转义
+     *
      * @param status
      * @param date
      * @return

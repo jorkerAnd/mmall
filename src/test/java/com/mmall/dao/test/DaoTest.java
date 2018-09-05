@@ -19,7 +19,7 @@ public class DaoTest {
 
     @Ignore
     @Test
-    public void testDao(){
+    public void testDao() {
         User a = new User();
         a.setPassword("111");
         a.setUsername("aaaaageely");

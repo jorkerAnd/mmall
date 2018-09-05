@@ -18,8 +18,8 @@ public class ProductServiceTest {
     private IProductService iProductService;
 
     @Test
-    public void testIProductService(){
-        ServerResponse<PageInfo> result =  iProductService.getProductByKeywordCategory("iphone",2,1,5,"price_desc");
+    public void testIProductService() {
+        ServerResponse<PageInfo> result = iProductService.getProductByKeywordCategory("iphone", 2, 1, 5, "price_desc");
         System.out.println(result);
     }
 

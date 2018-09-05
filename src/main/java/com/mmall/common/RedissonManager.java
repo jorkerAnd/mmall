@@ -17,6 +17,10 @@ public class RedissonManager {
     private Redisson redisson = null;
     private static Integer redis1Port = Integer.parseInt(PropertiesUtil.getProperty("redis1.port"));
     private static String redis1Ip = PropertiesUtil.getProperty("redis1.ip");
+
+    /**
+     * redisson现在只支持一个redis
+     */
     private static Integer redis2Port = Integer.parseInt(PropertiesUtil.getProperty("redis2.port"));
     private static String redis2Ip = PropertiesUtil.getProperty("redis2.ip");
     private static String redis2Password = PropertiesUtil.getProperty("redis2.paaword");

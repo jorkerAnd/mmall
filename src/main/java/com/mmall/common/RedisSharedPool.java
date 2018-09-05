@@ -21,7 +21,8 @@ public class RedisSharedPool {
     private static String redis1Ip = PropertiesUtil.getProperty("redis1.ip");
     private static Integer redis2Port = Integer.parseInt(PropertiesUtil.getProperty("redis2.port"));
     private static String redis2Ip = PropertiesUtil.getProperty("redis2.ip");
-    private  static String redis2Password=PropertiesUtil.getProperty("redis2.paaword");
+    private static String redis2Password = PropertiesUtil.getProperty("redis2.paaword");
+
     static {
 
         initPool();
@@ -39,24 +40,24 @@ public class RedisSharedPool {
         jedisPoolConfig.setTestOnReturn(testOnReturn);
         //连接耗尽的时候，是否阻塞，false会抛出异常，true.阻塞到超时
         jedisPoolConfig.setBlockWhenExhausted(true);
-        JedisShardInfo info1=new JedisShardInfo(redis1Ip,redis1Port,2*1000);
-        JedisShardInfo info2=new JedisShardInfo(redis2Ip,redis2Port,2*1000);
+        JedisShardInfo info1 = new JedisShardInfo(redis1Ip, redis1Port, 2 * 1000);
+        JedisShardInfo info2 = new JedisShardInfo(redis2Ip, redis2Port, 2 * 1000);
         info2.setPassword(redis2Password);
-        List<JedisShardInfo> jedisShardInfos=new ArrayList<>(2);
+        List<JedisShardInfo> jedisShardInfos = new ArrayList<>(2);
         jedisShardInfos.add(info1);
         jedisShardInfos.add(info2);
         //Hashing.MURMUR_HASH为一致性算法
-         pool=new ShardedJedisPool(jedisPoolConfig,jedisShardInfos, Hashing.MURMUR_HASH, Sharded.DEFAULT_KEY_TAG_PATTERN);
+        pool = new ShardedJedisPool(jedisPoolConfig, jedisShardInfos, Hashing.MURMUR_HASH, Sharded.DEFAULT_KEY_TAG_PATTERN);
 
     }
 
-    public static ShardedJedis getJedis()
-    {
+    public static ShardedJedis getJedis() {
         return pool.getResource();
     }
 
     /**
      * 因为为了将不可用的redis实例放回pool当中，所有需要将testOnReturn设置为false。否则不会将错误的redis实例放回，提高效率
+     *
      * @param jedis
      */
     public static void returnBrokenResource(ShardedJedis jedis) {
@@ -71,12 +72,12 @@ public class RedisSharedPool {
     }
 
     public static void main(String[] args) {
-        ShardedJedis jedis=pool.getResource();
-        for(int i=0;i<10;i++) {
+        ShardedJedis jedis = pool.getResource();
+        for (int i = 0; i < 10; i++) {
             //里面用了一致性算法
-           jedis.set("key:"+i,"value"+i);
+            jedis.set("key:" + i, "value" + i);
         }
-      returnResource(jedis);
+        returnResource(jedis);
     }
 
 }

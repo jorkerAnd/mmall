@@ -27,16 +27,12 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/manage/category")
 public class CategoryManageController {
 
-
-    @Autowired
-    private IUserService iUserService;
-
     @Autowired
     private ICategoryService iCategoryService;
 
     @RequestMapping("add_category.do")
     @ResponseBody
-    public ServerResponse addCategory(HttpServletRequest httpServletRequest, String categoryName, @RequestParam(value = "parentId",defaultValue = "0") int parentId){
+    public ServerResponse addCategory( String categoryName, @RequestParam(value = "parentId", defaultValue = "0") int parentId) {
         //User user = (User)session.getAttribute(Const.CURRENT_USER);
 //        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
 //        if (StringUtils.isEmpty(loginToken))
@@ -59,13 +55,13 @@ public class CategoryManageController {
 //        }else{
 //            return ServerResponse.createByErrorMessage("无权限操作,需要管理员权限");
 //        }
-      //上面的逻辑全部交给了interceptor进行了判断
-        return iCategoryService.addCategory(categoryName,parentId);
+        //上面的逻辑全部交给了interceptor进行了判断
+        return iCategoryService.addCategory(categoryName, parentId);
     }
 
     @RequestMapping("set_category_name.do")
     @ResponseBody
-    public ServerResponse setCategoryName(HttpServletRequest httpServletRequest,Integer categoryId,String categoryName){
+    public ServerResponse setCategoryName(HttpServletRequest httpServletRequest, Integer categoryId, String categoryName) {
         //User user = (User)session.getAttribute(Const.CURRENT_USER);
 //        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
 //        if (StringUtils.isEmpty(loginToken))
@@ -83,12 +79,12 @@ public class CategoryManageController {
 //        }else{
 //            return ServerResponse.createByErrorMessage("无权限操作,需要管理员权限");
 //        }
-        return iCategoryService.updateCategoryName(categoryId,categoryName);
+        return iCategoryService.updateCategoryName(categoryId, categoryName);
     }
 
     @RequestMapping("get_category.do")
     @ResponseBody
-    public ServerResponse getChildrenParallelCategory(HttpServletRequest httpServletRequest,@RequestParam(value = "categoryId" ,defaultValue = "0") Integer categoryId){
+    public ServerResponse getChildrenParallelCategory(HttpServletRequest httpServletRequest, @RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId) {
         //User user = (User)session.getAttribute(Const.CURRENT_USER);
 //        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
 //        if (StringUtils.isEmpty(loginToken))
@@ -111,7 +107,7 @@ public class CategoryManageController {
 
     @RequestMapping("get_deep_category.do")
     @ResponseBody
-    public ServerResponse getCategoryAndDeepChildrenCategory(HttpServletRequest httpServletRequest,@RequestParam(value = "categoryId" ,defaultValue = "0") Integer categoryId){
+    public ServerResponse getCategoryAndDeepChildrenCategory(HttpServletRequest httpServletRequest, @RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId) {
         //User user = (User)session.getAttribute(Const.CURRENT_USER);
 //        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
 //        if (StringUtils.isEmpty(loginToken))
@@ -133,12 +129,6 @@ public class CategoryManageController {
 //        }
         return iCategoryService.selectCategoryAndChildrenById(categoryId);
     }
-
-
-
-
-
-
 
 
 }

@@ -23,17 +23,17 @@ public class SessionExpireFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest httpServletRequest=(HttpServletRequest) servletRequest;
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 
-        String loginToken= CookieUtil.readLoginToken(httpServletRequest);
-        if(StringUtils.isNotEmpty(loginToken)){
+        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
+        if (StringUtils.isNotEmpty(loginToken)) {
 
-            String userJsonStr= RedisShardedPoolUtil.get(loginToken);
-            User user= JsonUtil.string2Obj(userJsonStr,User.class);
-             if(user!=null)
-                 RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SEESION_EXTIME);
+            String userJsonStr = RedisShardedPoolUtil.get(loginToken);
+            User user = JsonUtil.string2Obj(userJsonStr, User.class);
+            if (user != null)
+                RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SEESION_EXTIME);
         }
-        filterChain.doFilter(servletRequest,servletResponse);
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

@@ -45,18 +45,18 @@ public class UserSpringController {
     @RequestMapping(value = "login.do", method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse<User> login(String username, String password, HttpSession session, HttpServletResponse httpServletResponse) {
-        int i=0;
-        i=666/i;
+        int i = 0;
+        i = 666 / i;
         ServerResponse<User> response = iUserService.login(username, password);
         if (response.isSuccess()) {
             session.setAttribute(Const.CURRENT_USER, response.getData());
 
- /**
- * EB60894CC11E1574B1118A975BF17053
- * JSESSIONID=EB60894CC11E1574B1118A975BF17053
- * 一个浏览器访问一次就会出现了一次独有的session
- *
- */
+            /**
+             * EB60894CC11E1574B1118A975BF17053
+             * JSESSIONID=EB60894CC11E1574B1118A975BF17053
+             * 一个浏览器访问一次就会出现了一次独有的session
+             *
+             */
 
 //
 //            CookieUtil.writeLoginToken(httpServletResponse, session.getId());

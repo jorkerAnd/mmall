@@ -76,7 +76,7 @@ public class UserController {
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);
         CookieUtil.delLoginToken(httpServletRequest, httpServletResponse);
         RedisShardedPoolUtil.del(loginToken);
-        String result=CookieUtil.readLoginToken(httpServletRequest);
+        String result = CookieUtil.readLoginToken(httpServletRequest);
 
         log.info(result);
         return ServerResponse.createBySuccess();
@@ -138,7 +138,7 @@ public class UserController {
     @RequestMapping(value = "reset_password.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> resetPassword(HttpServletRequest httpServletRequest, String passwordOld, String passwordNew) {
-       // User user = (User) session.getAttribute(Const.CURRENT_USER);
+        // User user = (User) session.getAttribute(Const.CURRENT_USER);
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);
         if (StringUtils.isEmpty(loginToken))
             return ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户的信息");
